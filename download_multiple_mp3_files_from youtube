@@ -1,0 +1,28 @@
+import youtube_dl
+
+#define function to download 1 mp3 file giving a youtube URL
+def youtube_mp3(url):
+        video_info=youtube_dl.YoutubeDL().extract_info(url, download=False)
+        options={
+        'format':'bestaudio/best',
+        'keepvideo':False,
+        'outtmpl':f"{video_info['title']}.mp3"
+        }
+        with youtube_dl.YoutubeDL(options) as ydl:
+            ydl.download([video_info['webpage_url']])
+       
+#create a list with the URLs
+urls=[
+    "https://www.youtube.com/watch?v=ZyhrYis509A&ab_channel=AquaVEVO",
+    "https://www.youtube.com/watch?v=ZyhrYis509A&ab_channel=AquaVEVO",    
+]
+
+#create a for loop to run the youtube function over all the URLs in the list above
+for i in urls:
+    try:
+        youtube_mp3(i)
+    except:
+        print('the video with url',i,'shows error')
+        
+#there is try_except becouse sometimes videos ask confirmation for the age and so returns error
+#In this case the loop returns the URL responsable for the error
